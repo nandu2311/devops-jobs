@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  tasks:
+    - name: create s3 bucket
+      amazon.aws.s3_bucket:
+        name: mys3bucket2311
+        state: present
+        acl: public-read
+        region: "ap-south-1"
+        aws_access_key: AKIAYGIURU3TLHIYAN5Q
+        aws_secret_key: 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
