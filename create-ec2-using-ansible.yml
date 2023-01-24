@@ -23,24 +23,24 @@
         description: security_group for webserver
         region: "{{ region }}"
         rules:
-          - protocol: tcp
+          - proto: tcp
             from_port: 22
             to_port: 22
             cidr_ip: 0.0.0.0/0
-          - protocol: tcp
+          - proto: tcp
             from_port: 8080
             to_port: 8080
             cidr_ip: 0.0.0.0/0
-          - protocol: tcp
+          - proto: tcp
             from_port: 80
             to_port: 80
             cidr_ip: 0.0.0.0/0
-          - protocol: tcp
+          - proto: tcp
             from_port: 443
             to_port: 443
             cidr_ip: 0.0.0.0/0
         rules_egress:
-          - protocol: all
+          - proto: all
             cidr_ip: 0.0.0.0/0
       register: basic_firewall
 
