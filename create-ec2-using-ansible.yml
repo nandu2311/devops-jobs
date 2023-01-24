@@ -18,8 +18,8 @@
         image_id: ami-06984ea821ac0a879
         tags:
           Environment: Testing
-        aws_access_key: AKIAYGIURU3TLHIYAN5Q
-        aws_secret_key: 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
+        aws_access_key: XXXXXXXX
+        aws_secret_key: XXXXXXXX
   
 
     
