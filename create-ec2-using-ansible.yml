@@ -3,61 +3,23 @@
   hosts: localhost
   connection: local
   gather_facts: False
-  tags: provisioning
-
-  vars:
-    keypair: myvm
-    instance_type: t2.micro
-    image: ami-0ee23bfc74a881de5
-    wait: yes
-    group: webserver
-    count: 1
-    region: ap-south-1
-    security_group: ec2-security-group
-
+  
   tasks:
-    - name: Create a security_group
-      local_action:
-        module: ec2_group
-        name: "{{ security_group }}"
-        description: security_group for webserver
-        region: "{{ region }}"
-        rules:
-          - proto: tcp
-            from_port: 22
-            to_port: 22
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 8080
-            to_port: 8080
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 80
-            to_port: 80
-            cidr_ip: 0.0.0.0/0
-          - proto: tcp
-            from_port: 443
-            to_port: 443
-            cidr_ip: 0.0.0.0/0
-        rules_egress:
-          - proto: all
-            cidr_ip: 0.0.0.0/0
-      register: basic_firewall
-
-    - name: Launch the new EC2 Instance
-      local_action: ec2
-                  group={{ security_group }} 
-                  instance_type={{ instance_type}} 
-                  image={{ image }} 
-                  wait=true 
-                  region={{ region }} 
-                  keypair={{ keypair }}
-                  count={{count}}
-      register: ec2
-    - name: Task 
-      local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
-      with_items: "{{ ec2.instances }}"
-      args:
+    - name: launch an ec2 instance in aws
+      amazon.aws.ec2_instance:
+        name: "General-instance"
+        vpc_subnet_id: "subnet-0421d5a3e49a512f7"
+        region: "ap-south-1"
+        key_name: "myvm"
+        instance_type: t2.micro
+        security_group: default
+        network:
+          assign_public_ip: true
+        image_id: ami-06984ea821ac0a879
         tags:
-          name: MyTargetEc2Instance
+          Environment: Testing
+        aws_access_key: AKIAYGIURU3TLHIYAN5Q
+        aws_secret_key: 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
+  
+
     
